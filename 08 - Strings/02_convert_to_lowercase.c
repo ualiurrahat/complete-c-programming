@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ctype.h> // to use tolower() function
 
 int main()
 {
@@ -17,8 +18,12 @@ int main()
         // Check if the character is an uppercase letter (ASCII values 65 to 90)
         if (input[i] >= 65 && input[i] <= 90)
         {
-            // Convert the uppercase letter to lowercase by shifting it to the lowercase range
+            // way 1: Convert the uppercase letter to lowercase by shifting it to the lowercase range
             input[i] = 'a' + (input[i] - 'A');
+            // way 2:direcly changing the ascii value of each character
+            // input[i] = input[i] + 32;
+            // way 3: using library function
+            // input[i] = tolower(input[i]);
         }
     }
 

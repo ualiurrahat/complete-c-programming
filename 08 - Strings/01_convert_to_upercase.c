@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <ctype.h> // to use toupper() function
 int main()
 {
     // Declare and initialize a character array with the input string "bangladesh"
@@ -17,8 +17,12 @@ int main()
         // Check if the character is a lowercase letter (ASCII values 97 to 122)
         if (input[i] >= 97 && input[i] <= 122)
         {
-            // Convert the lowercase letter to uppercase by shifting it to the uppercase range
+            // way 1: Convert the lowercase letter to uppercase by shifting it to the uppercase range
             input[i] = 'A' + (input[i] - 'a');
+            // way 2: changing the ascii value directly for each character
+            //  input[i] = input[i] - 32;
+            // way 3: using library function
+            //  input[i] = toupper(input[i]);
         }
     }
 
