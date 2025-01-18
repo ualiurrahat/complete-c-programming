@@ -1,3 +1,5 @@
+// array declaration : data type_array name_[array size]
+
 #include <stdio.h>
 
 int main()
