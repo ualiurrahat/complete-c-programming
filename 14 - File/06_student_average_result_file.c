@@ -2,65 +2,72 @@
 
 32 83 in first line of "06_math.txt", means, role no. 32 student got 83 marks in the exam.Like these each file contains numbers of 10 students. so each file has 10 lines of data. Now I need to make the average of numbers for each student and create a new text file, while their role and avg numbers will be written.
 */
-
 #include <stdio.h>
-#include <stdlib.h>
-// macro for student no. and total no. of characters in a line in files
-#define MAX_STUDENTS 10
-#define MAX_LINE_LEN 80
+
+#define NUM_STUDENTS 10 // Define the number of students (lines in each file)
+
 int main()
 {
-    // file pointers for input and output file
-    FILE *math_file, *bangla_file, *english_file, *output_file;
+    // Declare file pointers for input and output files
+    FILE *fp_math, *fp_bangla, *fp_english, *fp_out;
 
-    // array to store student marks(roll, bangla,english,math marks)
-    int student_data[MAX_STUDENTS][4] = {{0}};
+    // File names for input and output
+    char math_file[] = "06_math.txt";
+    char bangla_file[] = "06_bangla.txt";
+    char english_file[] = "06_english.txt";
+    char output_file[] = "06_average.txt";
 
-    // open input files
-    bangla_file = fopen("06_bangla.txt", "r");
-    english_file = fopen("06_english.txt", "r");
-    math_file = fopen("06_math.txt", "r");
+    // Open all files
+    fp_math = fopen(math_file, "r");
+    fp_bangla = fopen(bangla_file, "r");
+    fp_english = fopen(english_file, "r");
+    fp_out = fopen(output_file, "w");
 
-    // read marks from input files
-    char line[MAX_LINE_LEN];
-    int roll, marks;
+    char line[80];
+    int roll_math, roll_bangla, roll_english;
+    int mark_math, mark_bangla, mark_english;
 
-    // loop to read files and marks
-    for (int i = 0; i < MAX_STUDENTS; i++)
+    // Debug: Print Bangla file content before processing
+    printf("Bangla file content:\n");
+    while (fgets(line, 80, fp_bangla) != NULL)
     {
-        // read bangla marks
-        fgets(line, MAX_LINE_LEN, bangla_file);
-        sscanf(line, "%d %d", &roll, &marks);
-        student_data[i][0] = roll;
-        student_data[i][1] = marks;
-
-        // read math marks
-        fgets(line, MAX_LINE_LEN, math_file);
-        sscanf(line, "%d %d", &roll, &marks);
-        student_data[i][2] = marks;
-
-        // read english marks
-        fgets(line, MAX_LINE_LEN, english_file);
-        sscanf(line, "%d %d", &roll, &marks);
-        student_data[i][3] = marks;
+        printf("%s", line);
     }
-    // close input files
-    fclose(bangla_file);
-    fclose(math_file);
-    fclose(english_file);
+    rewind(fp_bangla); // Reset the file pointer to the beginning
 
-    // open output file
-    output_file = fopen("06_average.txt", "w");
-
-    // calculate and write averaage marks on output file
-    for (int i = 0; i < MAX_STUDENTS; i++)
+    // Process data for each student
+    for (int i = 0; i < NUM_STUDENTS; i++)
     {
-        double average = (double)(student_data[i][1] + student_data[i][2] + student_data[i][3]) / 3.0;
-        fprintf(output_file, "%d %.2lf\n", student_data[i][0], average);
-    }
-    // close output file
-    fclose(output_file);
+        // Read Bangla marks
+        fgets(line, 80, fp_bangla);
+        sscanf(line, "%d %d", &roll_bangla, &mark_bangla);
 
-    printf("Averagge marks calculated and written on 06_average.txt file.\n");
-    return 0;
+        // Read English marks
+        fgets(line, 80, fp_english);
+        sscanf(line, "%d %d", &roll_english, &mark_english);
+
+        // Read Math marks
+        fgets(line, 80, fp_math);
+        sscanf(line, "%d %d", &roll_math, &mark_math);
+
+        // Debugging: Print values to verify correctness
+        printf("Bangla: Roll: %d, Marks: %d\n", roll_bangla, mark_bangla);
+        printf("English: Roll: %d, Marks: %d\n", roll_english, mark_english);
+        printf("Math: Roll: %d, Marks: %d\n", roll_math, mark_math);
+
+        // Calculate average marks
+        double avg = (mark_bangla + mark_english + mark_math) / 3.0;
+
+        // Write roll and average mark to the output file
+        fprintf(fp_out, "%d %.2lf\n", roll_math, avg);
+    }
+
+    // Close all files after processing
+    fclose(fp_math);
+    fclose(fp_bangla);
+    fclose(fp_english);
+    fclose(fp_out);
+
+    printf("File work successfully done!\n");
+    return 0; // Indicate successful program termination
 }
