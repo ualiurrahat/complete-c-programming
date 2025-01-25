@@ -15,6 +15,7 @@ int main()
 
     // Dynamically allocate memory for an array of 'n' integers to store the marks
     marks = (int *)malloc(sizeof(int) * n);
+    // marks = (int *) calloc(n, sizeof(int));
 
     // Check if memory allocation was successful
     if (marks == NULL)
@@ -27,14 +28,15 @@ int main()
     printf("Please enter the mark for each student: \n");
     for (i = 0; i < n; i++)
     {
+        printf("Student %d: ", i + 1);
         scanf("%d", &marks[i]); // Input the mark for each student
     }
 
     // Display the entered marks
-    printf("Now here you can see the values: \n");
+    printf("Output\n");
     for (i = 0; i < n; i++)
     {
-        printf("%d\n", marks[i]); // Output each student's mark
+        printf("Student %d: Marks %d\n", i + 1, marks[i]); // Output each student's mark
     }
 
     // Free the dynamically allocated memory after use
